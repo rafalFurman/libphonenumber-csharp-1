@@ -1,5 +1,9 @@
 # Overview
 
+This fork provides portable version of libphonenumber-cshap project, only changes that where requried to compile as portable where made.
+
+--
+
 # libphonenumber-csharp
 Clone of original C# port here:  https://bitbucket.org/pmezard/libphonenumber-csharp/wiki/Home
 
