@@ -53,7 +53,9 @@
     <Compile Include="AreaCodeMap.cs" />
     <Compile Include="AreaCodeMapStorageStrategy.cs" />
     <Compile Include="AreaCodeParser.cs" />
+    <Compile Include="AssemblyProvider.cs" />
     <Compile Include="AsYouTypeFormatter.cs" />
+    <Compile Include="BuildMetadataFromXml.cs" />
     <Compile Include="CountryCodeToRegionCodeMap.cs" />
     <Compile Include="DefaultMapStorage.cs" />
     <Compile Include="FlyweightMapStorage.cs" />
@@ -73,10 +75,11 @@
     <Compile Include="RegionCode.cs" />
     <Compile Include="ShortNumberUtil.cs" />
     <Compile Include="Util.cs" />
-    <Compile Include="BuildMetadataFromXml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PhoneNumberMetaData.xml" />
+    <EmbeddedResource Include="PhoneNumberMetaData.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PhoneNumberMetaDataForTesting.xml" />
   </ItemGroup>
   <ItemGroup>

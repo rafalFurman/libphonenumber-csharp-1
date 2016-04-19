@@ -137,7 +137,7 @@ namespace PhoneNumbers
         private const String RFC3966_PREFIX = "tel:";
         private const String RFC3966_PHONE_CONTEXT = ";phone-context=";
         private const String RFC3966_ISDN_SUBADDRESS = ";isub=";
-        
+
         // A map that contains characters that are essential when dialling. That means any of the
         // characters in this map must not be removed from a number when dialing, otherwise the call will
         // not reach the intended destination.
@@ -162,7 +162,7 @@ namespace PhoneNumbers
         // always contains character(s) other than ASCII digits.
         // Note this regex also includes tilde, which signals waiting for the tone.
         private static readonly PhoneRegex UNIQUE_INTERNATIONAL_PREFIX =
-            new PhoneRegex("[\\d]+(?:[~\u2053\u223C\uFF5E][\\d]+)?", RegexOptions.Compiled);
+            new PhoneRegex("[\\d]+(?:[~\u2053\u223C\uFF5E][\\d]+)?");
 
         // Regular expression of acceptable punctuation found in phone numbers. This excludes punctuation
         // found as a leading character only.
@@ -179,8 +179,8 @@ namespace PhoneNumbers
         private static readonly String VALID_ALPHA;
 
         internal const String PLUS_CHARS = "+\uFF0B";
-        internal static readonly PhoneRegex PLUS_CHARS_PATTERN = new PhoneRegex("[" + PLUS_CHARS + "]+", RegexOptions.Compiled);
-        private static readonly PhoneRegex SEPARATOR_PATTERN = new PhoneRegex("[" + VALID_PUNCTUATION + "]+", RegexOptions.Compiled);
+        internal static readonly PhoneRegex PLUS_CHARS_PATTERN = new PhoneRegex("[" + PLUS_CHARS + "]+");
+        private static readonly PhoneRegex SEPARATOR_PATTERN = new PhoneRegex("[" + VALID_PUNCTUATION + "]+");
         private static readonly Regex CAPTURING_DIGIT_PATTERN;
 
         // Regular expression of acceptable characters that may start a phone number for the purposes of
@@ -198,12 +198,12 @@ namespace PhoneNumbers
         // actually two phone numbers, (530) 583-6985 x302 and (530) 583-6985 x2303. We remove the second
         // extension so that the first number is parsed correctly.
         private static readonly String SECOND_NUMBER_START = "[\\\\/] *x";
-        internal static readonly Regex SECOND_NUMBER_START_PATTERN = new Regex(SECOND_NUMBER_START, RegexOptions.Compiled);
+        internal static readonly Regex SECOND_NUMBER_START_PATTERN = new Regex(SECOND_NUMBER_START);
 
         // We use this pattern to check if the phone number has at least three letters in it - if so, then
         // we treat it as a number where some phone-number digits are represented by letters.
         private static readonly PhoneRegex VALID_ALPHA_PHONE_PATTERN =
-            new PhoneRegex("(?:.*?[A-Za-z]){3}.*", RegexOptions.Compiled);
+            new PhoneRegex("(?:.*?[A-Za-z]){3}.*");
 
         // Regular expression of viable phone numbers. This is location independent. Checks we have at
         // least three leading digits, and only valid punctuation, alpha characters and
@@ -268,16 +268,16 @@ namespace PhoneNumbers
         // have an extension prefix appended, followed by 1 or more digits.
         private static readonly PhoneRegex VALID_PHONE_NUMBER_PATTERN;
 
-        internal static readonly Regex NON_DIGITS_PATTERN = new Regex("\\D+", RegexOptions.Compiled);
+        internal static readonly Regex NON_DIGITS_PATTERN = new Regex("\\D+");
 
         // The FIRST_GROUP_PATTERN was originally set to $1 but there are some countries for which the
         // first group is not used in the national pattern (e.g. Argentina) so the $1 group does not match
         // correctly.  Therefore, we use \d, so that the first group actually used in the pattern will be
         // matched.
-        private static readonly Regex FIRST_GROUP_PATTERN = new Regex("(\\$\\d)", RegexOptions.Compiled);
-        private static readonly Regex NP_PATTERN = new Regex("\\$NP", RegexOptions.Compiled);
-        private static readonly Regex FG_PATTERN = new Regex("\\$FG", RegexOptions.Compiled);
-        private static readonly Regex CC_PATTERN = new Regex("\\$CC", RegexOptions.Compiled);
+        private static readonly Regex FIRST_GROUP_PATTERN = new Regex("(\\$\\d)");
+        private static readonly Regex NP_PATTERN = new Regex("\\$NP");
+        private static readonly Regex FG_PATTERN = new Regex("\\$FG");
+        private static readonly Regex CC_PATTERN = new Regex("\\$CC");
 
         static PhoneNumberUtil()
         {
@@ -371,12 +371,12 @@ namespace PhoneNumbers
 
             // We accept alpha characters in phone numbers, ASCII only, upper and lower case.
             VALID_ALPHA =
-                String.Join("", ALPHA_MAPPINGS.Keys.Where(c => !"[, \\[\\]]".Contains(c)).ToList().ConvertAll(c => c.ToString()).ToArray()) +
-                String.Join("", ALPHA_MAPPINGS.Keys.Where(c => !"[, \\[\\]]".Contains(c)).ToList().ConvertAll(c => c.ToString()).ToArray()).ToLower();
+                String.Join("", ALPHA_MAPPINGS.Keys.Select(c => c.ToString()).Where(c => !"[, \\[\\]]".Contains(c)).ToArray()) +
+                String.Join("", ALPHA_MAPPINGS.Keys.Select(c => c.ToString()).Where(c => !"[, \\[\\]]".Contains(c)).ToArray()).ToLower();
 
-            CAPTURING_DIGIT_PATTERN = new Regex("(" + DIGITS + ")", RegexOptions.Compiled);
+            CAPTURING_DIGIT_PATTERN = new Regex("(" + DIGITS + ")");
             VALID_START_CHAR = "[" + PLUS_CHARS + DIGITS + "]";
-            VALID_START_CHAR_PATTERN = new PhoneRegex(VALID_START_CHAR, RegexOptions.Compiled);
+            VALID_START_CHAR_PATTERN = new PhoneRegex(VALID_START_CHAR);
 
             CAPTURING_EXTN_DIGITS = "(" + DIGITS + "{1,7})";
             VALID_PHONE_NUMBER =
@@ -553,9 +553,9 @@ namespace PhoneNumbers
 
         private void LoadMetadataFromFile(String filePrefix, String regionCode, int countryCallingCode)
         {
-            var asm = Assembly.GetExecutingAssembly();
+            var asm = AssemblyProvider.GetAssembly();
             bool isNonGeoRegion = REGION_CODE_FOR_NON_GEO_ENTITY.Equals(regionCode);
-            var name = asm.GetManifestResourceNames().Where(n => n.EndsWith(filePrefix)).FirstOrDefault() ?? "missing";
+            var name = asm.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith(filePrefix)) ?? "missing";
             using (var stream = asm.GetManifestResourceStream(name))
             {
                 try
@@ -563,7 +563,7 @@ namespace PhoneNumbers
                     var meta = BuildMetadataFromXml.BuildPhoneMetadataCollection(stream, false);
                     foreach (var m in meta.MetadataList)
                     {
-                        if(isNonGeoRegion)
+                        if (isNonGeoRegion)
                             countryCodeToNonGeographicalMetadataMap[m.CountryCode] = m;
                         else
                             regionToMetadataMap[m.Id] = m;
@@ -1322,7 +1322,7 @@ namespace PhoneNumbers
                     formattedNumber = Format(number, PhoneNumberFormat.INTERNATIONAL).Substring(1);
                     break;
                 case CountryCodeSource.FROM_DEFAULT_COUNTRY:
-                    // Fall-through to default case.
+                // Fall-through to default case.
                 default:
                     String regionCode = GetRegionCodeForCountryCode(number.CountryCode);
                     // We strip non-digits from the NDD here, and from the raw input later, so that we can
@@ -2216,7 +2216,7 @@ namespace PhoneNumbers
             // Russia) since the getRegionCodeForNumber will not work if the number is possible but not
             // valid. This would need to be revisited if the possible number pattern ever differed between
             // various regions within those plans.
-             if (!HasValidCountryCallingCode(countryCode))
+            if (!HasValidCountryCallingCode(countryCode))
                 return ValidationResult.INVALID_COUNTRY_CODE;
             String regionCode = GetRegionCodeForCountryCode(countryCode);
             PhoneMetadata metadata = GetMetadataForRegionOrCallingCode(countryCode, regionCode);

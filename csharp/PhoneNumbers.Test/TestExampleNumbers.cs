@@ -18,29 +18,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using NUnit.Framework;
+#if NETFX_CORE 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else 
+using Microsoft.VisualStudio.TestTools.UnitTesting; 
+#endif
 
 namespace PhoneNumbers.Test
 {
-    [TestFixture]
-    class TestExampleNumbers
+    [TestClass]
+    public class TestExampleNumbers
     {
         private PhoneNumberUtil phoneNumberUtil;
         private List<PhoneNumber> invalidCases = new List<PhoneNumber>();
         private List<PhoneNumber> wrongTypeCases = new List<PhoneNumber>();
 
-        [TestFixtureSetUp]
-        public void SetupFixture()
+        [TestInitialize]
+        public void SetUp()
         {
             PhoneNumberUtil.ResetInstance();
             phoneNumberUtil = PhoneNumberUtil.GetInstance();
-        }
-
-        [SetUp]
-        protected void SetUp()
-        {
-            invalidCases.Clear();
-            wrongTypeCases.Clear();
+            invalidCases = new List<PhoneNumber>();
+            wrongTypeCases = new List<PhoneNumber>();
         }
 
         /**
@@ -89,7 +88,7 @@ namespace PhoneNumbers.Test
             return MakeSet(t1, t1);
         }
 
-        [Test]
+        [TestMethod]
         public void TestFixedLine()
         {
             HashSet<PhoneNumberType> fixedLineTypes = MakeSet(PhoneNumberType.FIXED_LINE,
@@ -99,7 +98,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMobile()
         {
             HashSet<PhoneNumberType> mobileTypes = MakeSet(PhoneNumberType.MOBILE,
@@ -109,7 +108,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestTollFree()
         {
 
@@ -119,7 +118,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPremiumRate()
         {
             HashSet<PhoneNumberType> premiumRateTypes = MakeSet(PhoneNumberType.PREMIUM_RATE);
@@ -128,7 +127,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestVoip()
         {
             HashSet<PhoneNumberType> voipTypes = MakeSet(PhoneNumberType.VOIP);
@@ -137,7 +136,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPager()
         {
             HashSet<PhoneNumberType> pagerTypes = MakeSet(PhoneNumberType.PAGER);
@@ -146,7 +145,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUan()
         {
             HashSet<PhoneNumberType> uanTypes = MakeSet(PhoneNumberType.UAN);
@@ -155,7 +154,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestVoicemail()
         {
             HashSet<PhoneNumberType> voicemailTypes = MakeSet(PhoneNumberType.VOICEMAIL);
@@ -164,7 +163,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSharedCost()
         {
             HashSet<PhoneNumberType> sharedCostTypes = MakeSet(PhoneNumberType.SHARED_COST);
@@ -173,7 +172,7 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCases.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCanBeInternationallyDialled()
         {
             foreach (var regionCode in phoneNumberUtil.GetSupportedRegions())
@@ -203,7 +202,7 @@ namespace PhoneNumbers.Test
 
         // TODO: Update this to use connectsToEmergencyNumber or similar once that is
         // implemented.
-        [Test]
+        [TestMethod]
         public void TestEmergency()
         {
             ShortNumberUtil shortUtil = new ShortNumberUtil(phoneNumberUtil);
@@ -226,14 +225,14 @@ namespace PhoneNumbers.Test
             Assert.AreEqual(0, wrongTypeCounter);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGlobalNetworkNumbers()
         {
             foreach(var callingCode in phoneNumberUtil.GetSupportedGlobalNetworkCallingCodes())
             {
                 PhoneNumber exampleNumber =
                     phoneNumberUtil.GetExampleNumberForNonGeoEntity(callingCode);
-                Assert.NotNull(exampleNumber, "No example phone number for calling code " + callingCode);
+                Assert.IsNotNull(exampleNumber, "No example phone number for calling code " + callingCode);
                 if (!phoneNumberUtil.IsValidNumber(exampleNumber))
                 {
                     invalidCases.Add(exampleNumber);
@@ -242,7 +241,7 @@ namespace PhoneNumbers.Test
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestEveryRegionHasAnExampleNumber()
         {
             foreach (var regionCode in phoneNumberUtil.GetSupportedRegions())

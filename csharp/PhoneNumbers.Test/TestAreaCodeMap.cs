@@ -17,8 +17,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
-
+#if NETFX_CORE 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 namespace PhoneNumbers.Test
 {
     /**
@@ -26,14 +29,14 @@ namespace PhoneNumbers.Test
     *
     * @author Shaopeng Jia
     */
-    [TestFixture]
-    class TestAreaCodeMap
+    [TestClass]
+    public class TestAreaCodeMap
     {
-        private readonly AreaCodeMap areaCodeMapForUS = new AreaCodeMap();
-        private readonly AreaCodeMap areaCodeMapForIT = new AreaCodeMap();
+        private static AreaCodeMap areaCodeMapForUS = new AreaCodeMap();
+        private static AreaCodeMap areaCodeMapForIT = new AreaCodeMap();
 
-        [TestFixtureSetUp]
-        public void SetupFixture()
+        [ClassInitialize]
+        public static void SetupFixture(TestContext context)
         {
             SortedDictionary<int, String> sortedMap = new SortedDictionary<int, String>();
             sortedMap[1212] = "New York";
@@ -78,23 +81,23 @@ namespace PhoneNumbers.Test
             return sortedMap;
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSmallerMapStorageChoosesDefaultImpl()
         {
             AreaCodeMapStorageStrategy mapStorage =
                 new AreaCodeMap().getSmallerMapStorage(createDefaultStorageMapCandidate());
-            Assert.False(mapStorage.GetType() == typeof(FlyweightMapStorage));
+            Assert.IsFalse(mapStorage.GetType() == typeof(FlyweightMapStorage));
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSmallerMapStorageChoosesFlyweightImpl()
         {
             AreaCodeMapStorageStrategy mapStorage =
                 new AreaCodeMap().getSmallerMapStorage(createFlyweightStorageMapCandidate());
-            Assert.True(mapStorage.GetType() == typeof(FlyweightMapStorage));
+            Assert.IsTrue(mapStorage.GetType() == typeof(FlyweightMapStorage));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupInvalidNumber_US()
         {
             // central office code cannot start with 1.
@@ -102,56 +105,56 @@ namespace PhoneNumbers.Test
             Assert.AreEqual("New York", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_NJ()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(2016641234L).Build();
             Assert.AreEqual("Westwood, NJ", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_NY()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(2126641234L).Build();
             Assert.AreEqual("New York", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_CA_1()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(6503451234L).Build();
             Assert.AreEqual("San Mateo, CA", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_CA_2()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(6502531234L).Build();
             Assert.AreEqual("California", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumberFound_TX()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(9724801234L).Build();
             Assert.AreEqual("Richardson, TX", areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumberNotFound_TX()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(1).SetNationalNumber(9724811234L).Build();
             Assert.IsNull(areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_CH()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(41).SetNationalNumber(446681300L).Build();
             Assert.IsNull(areaCodeMapForUS.Lookup(number));
         }
 
-        [Test]
+        [TestMethod]
         public void TestLookupNumber_IT()
         {
             var number = new PhoneNumber.Builder().SetCountryCode(39).SetNationalNumber(212345678L).SetItalianLeadingZero(true)

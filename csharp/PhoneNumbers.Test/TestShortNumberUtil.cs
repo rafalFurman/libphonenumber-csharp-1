@@ -17,7 +17,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+#if NETFX_CORE 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace PhoneNumbers.Test
 {
@@ -26,156 +30,156 @@ namespace PhoneNumbers.Test
      *
      * @author Shaopeng Jia
      */
-    [TestFixture]
-    class ShortNumberUtilTest: TestMetadataTestCase
+    [TestClass]
+    public class ShortNumberUtilTest : TestMetadataTestCase
     {
         private ShortNumberUtil shortUtil;
 
-        [TestFixtureSetUp]
-        public new void SetupFixture()
+        [TestInitialize]
+        public void SetupFixture()
         {
             base.SetupFixture();
             shortUtil = new ShortNumberUtil(phoneUtil);
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumber_US()
         {
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.US));
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("119", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("999", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("119", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("999", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumberLongNumber_US()
         {
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("9116666666", RegionCode.US));
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("1196666666", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("9996666666", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("9116666666", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("1196666666", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("9996666666", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumberWithFormatting_US()
         {
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("9-1-1", RegionCode.US));
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("1-1-9", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("9-9-9", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("9-1-1", RegionCode.US));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("1-1-9", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("9-9-9", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumberWithPlusSign_US()
         {
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("+911", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("\uFF0B911", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber(" +911", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("+119", RegionCode.US));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("+999", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("+911", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("\uFF0B911", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber(" +911", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("+119", RegionCode.US));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("+999", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumber_BR()
         {
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.BR));
-            Assert.True(shortUtil.ConnectsToEmergencyNumber("190", RegionCode.BR));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("999", RegionCode.BR));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.BR));
+            Assert.IsTrue(shortUtil.ConnectsToEmergencyNumber("190", RegionCode.BR));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("999", RegionCode.BR));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumberLongNumber_BR()
         {
             // Brazilian emergency numbers don't work when additional digits are appended.
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("9111", RegionCode.BR));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("1900", RegionCode.BR));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("9996", RegionCode.BR));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("9111", RegionCode.BR));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("1900", RegionCode.BR));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("9996", RegionCode.BR));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumber_AO()
         {
             // Angola doesn't have any metadata for emergency numbers in the test metadata.
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.AO));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("222123456", RegionCode.AO));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("923123456", RegionCode.AO));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.AO));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("222123456", RegionCode.AO));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("923123456", RegionCode.AO));
         }
 
-        [Test]
+        [TestMethod]
         public void testConnectsToEmergencyNumber_ZW()
         {
             // Zimbabwe doesn't have any metadata in the test metadata.
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.ZW));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("01312345", RegionCode.ZW));
-            Assert.False(shortUtil.ConnectsToEmergencyNumber("0711234567", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("911", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("01312345", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.ConnectsToEmergencyNumber("0711234567", RegionCode.ZW));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumber_US()
         {
-            Assert.True(shortUtil.IsEmergencyNumber("911", RegionCode.US));
-            Assert.True(shortUtil.IsEmergencyNumber("119", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("999", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("911", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("119", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("999", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumberLongNumber_US()
         {
-            Assert.False(shortUtil.IsEmergencyNumber("9116666666", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("1196666666", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("9996666666", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("9116666666", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("1196666666", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("9996666666", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumberWithFormatting_US()
         {
-            Assert.True(shortUtil.IsEmergencyNumber("9-1-1", RegionCode.US));
-            Assert.True(shortUtil.IsEmergencyNumber("*911", RegionCode.US));
-            Assert.True(shortUtil.IsEmergencyNumber("1-1-9", RegionCode.US));
-            Assert.True(shortUtil.IsEmergencyNumber("*119", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("9-9-9", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("*999", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("9-1-1", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("*911", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("1-1-9", RegionCode.US));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("*119", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("9-9-9", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("*999", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumberWithPlusSign_US()
         {
-            Assert.False(shortUtil.IsEmergencyNumber("+911", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("\uFF0B911", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber(" +911", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("+119", RegionCode.US));
-            Assert.False(shortUtil.IsEmergencyNumber("+999", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("+911", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("\uFF0B911", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber(" +911", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("+119", RegionCode.US));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("+999", RegionCode.US));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumber_BR()
         {
-            Assert.True(shortUtil.IsEmergencyNumber("911", RegionCode.BR));
-            Assert.True(shortUtil.IsEmergencyNumber("190", RegionCode.BR));
-            Assert.False(shortUtil.IsEmergencyNumber("999", RegionCode.BR));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("911", RegionCode.BR));
+            Assert.IsTrue(shortUtil.IsEmergencyNumber("190", RegionCode.BR));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("999", RegionCode.BR));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumberLongNumber_BR()
         {
-            Assert.False(shortUtil.IsEmergencyNumber("9111", RegionCode.BR));
-            Assert.False(shortUtil.IsEmergencyNumber("1900", RegionCode.BR));
-            Assert.False(shortUtil.IsEmergencyNumber("9996", RegionCode.BR));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("9111", RegionCode.BR));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("1900", RegionCode.BR));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("9996", RegionCode.BR));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumber_AO()
         {
             // Angola doesn't have any metadata for emergency numbers in the test metadata.
-            Assert.False(shortUtil.IsEmergencyNumber("911", RegionCode.AO));
-            Assert.False(shortUtil.IsEmergencyNumber("222123456", RegionCode.AO));
-            Assert.False(shortUtil.IsEmergencyNumber("923123456", RegionCode.AO));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("911", RegionCode.AO));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("222123456", RegionCode.AO));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("923123456", RegionCode.AO));
         }
 
-        [Test]
+        [TestMethod]
         public void testIsEmergencyNumber_ZW()
         {
             // Zimbabwe doesn't have any metadata in the test metadata.
-            Assert.False(shortUtil.IsEmergencyNumber("911", RegionCode.ZW));
-            Assert.False(shortUtil.IsEmergencyNumber("01312345", RegionCode.ZW));
-            Assert.False(shortUtil.IsEmergencyNumber("0711234567", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("911", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("01312345", RegionCode.ZW));
+            Assert.IsFalse(shortUtil.IsEmergencyNumber("0711234567", RegionCode.ZW));
         }
     }
 }

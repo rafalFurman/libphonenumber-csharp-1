@@ -17,7 +17,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+#if NETFX_CORE 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework; 
+#else 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace PhoneNumbers.Test
 {
@@ -30,13 +34,13 @@ namespace PhoneNumbers.Test
     * @author Shaopeng Jia
     * @author Lara Rennie
     */
-    class TestMetadataTestCase
+    public class TestMetadataTestCase
     {
         public const String TEST_META_DATA_FILE_PREFIX = "PhoneNumberMetaDataForTesting.xml";
 
         protected PhoneNumberUtil phoneUtil;
 
-        [TestFixtureSetUp]
+        [TestInitialize]
         public void SetupFixture()
         {
             phoneUtil = InitializePhoneUtilForTesting();

@@ -17,22 +17,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+#if NETFX_CORE
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else 
+using Microsoft.VisualStudio.TestTools.UnitTesting; 
+#endif
 
 namespace PhoneNumbers.Test
 {
-    [TestFixture]
-    class TestRegexCache
+    [TestClass]
+    public class TestRegexCache
     {
         private RegexCache regexCache;
 
-        [TestFixtureSetUp]
+        [TestInitialize]
         public void SetupFixture()
         {
             regexCache = new RegexCache(2);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRegexInsertion()
         {
             const String regex1 = "[1-5]";
@@ -40,20 +44,20 @@ namespace PhoneNumbers.Test
             const String regex3 = "[1-3][58]";
 
             regexCache.GetPatternForRegex(regex1);
-            Assert.That(regexCache.ContainsRegex(regex1));
+            Assert.IsTrue(regexCache.ContainsRegex(regex1));
 
             regexCache.GetPatternForRegex(regex2);
-            Assert.That(regexCache.ContainsRegex(regex2));
-            Assert.That(regexCache.ContainsRegex(regex1));
+            Assert.IsTrue(regexCache.ContainsRegex(regex2));
+            Assert.IsTrue(regexCache.ContainsRegex(regex1));
 
             regexCache.GetPatternForRegex(regex1);
-            Assert.That(regexCache.ContainsRegex(regex1));
+            Assert.IsTrue(regexCache.ContainsRegex(regex1));
 
             regexCache.GetPatternForRegex(regex3);
-            Assert.That(regexCache.ContainsRegex(regex3));
+            Assert.IsTrue(regexCache.ContainsRegex(regex3));
 
-            Assert.False(regexCache.ContainsRegex(regex2));
-            Assert.That(regexCache.ContainsRegex(regex1));
+            Assert.IsFalse(regexCache.ContainsRegex(regex2));
+            Assert.IsTrue(regexCache.ContainsRegex(regex1));
         }
     }
 }

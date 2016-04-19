@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B66DEEC-8EC4-4D03-9581-0DE7C8C5F26F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhoneNumbers</RootNamespace>
+    <AssemblyName>PhoneNumbers</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <EmbeddedResource Include="..\PhoneNumbers\PhoneNumberAlternateFormats.xml">
+      <Link>PhoneNumberAlternateFormats.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\PhoneNumberMetaData.xml">
+      <Link>PhoneNumberMetaData.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\PhoneNumberMetaDataForTesting.xml">
+      <Link>PhoneNumberMetaDataForTesting.xml</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PhoneNumbers\AreaCodeMap.cs">
+      <Link>AreaCodeMap.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\AreaCodeMapStorageStrategy.cs">
+      <Link>AreaCodeMapStorageStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\AreaCodeParser.cs">
+      <Link>AreaCodeParser.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\AsYouTypeFormatter.cs">
+      <Link>AsYouTypeFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\BuildMetadataFromXml.cs">
+      <Link>BuildMetadataFromXml.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\CountryCodeToRegionCodeMap.cs">
+      <Link>CountryCodeToRegionCodeMap.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\DefaultMapStorage.cs">
+      <Link>DefaultMapStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\FlyweightMapStorage.cs">
+      <Link>FlyweightMapStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\LocaleData.cs">
+      <Link>LocaleData.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\MappingFileProvider.cs">
+      <Link>MappingFileProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\MetadataManager.cs">
+      <Link>MetadataManager.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\NumberParseException.cs">
+      <Link>NumberParseException.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\Phonemetadata.cs">
+      <Link>Phonemetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\Phonenumber.cs">
+      <Link>Phonenumber.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\PhoneNumberMatch.cs">
+      <Link>PhoneNumberMatch.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\PhoneNumberMatcher.cs">
+      <Link>PhoneNumberMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\PhoneNumberOfflineGeocoder.cs">
+      <Link>PhoneNumberOfflineGeocoder.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\PhoneNumberUtil.cs">
+      <Link>PhoneNumberUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\PhoneRegex.cs">
+      <Link>PhoneRegex.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\RegexCache.cs">
+      <Link>RegexCache.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\RegionCode.cs">
+      <Link>RegionCode.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\ShortNumberUtil.cs">
+      <Link>ShortNumberUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\PhoneNumbers\Util.cs">
+      <Link>Util.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_1_en">
+      <Link>res\prod_1_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_20_en">
+      <Link>res\prod_20_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_212_en">
+      <Link>res\prod_212_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_212_fr">
+      <Link>res\prod_212_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_213_en">
+      <Link>res\prod_213_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_216_en">
+      <Link>res\prod_216_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_220_en">
+      <Link>res\prod_220_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_221_en">
+      <Link>res\prod_221_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_222_en">
+      <Link>res\prod_222_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_222_fr">
+      <Link>res\prod_222_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_224_en">
+      <Link>res\prod_224_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_225_en">
+      <Link>res\prod_225_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_225_fr">
+      <Link>res\prod_225_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_226_en">
+      <Link>res\prod_226_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_228_en">
+      <Link>res\prod_228_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_228_es">
+      <Link>res\prod_228_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_228_fr">
+      <Link>res\prod_228_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_229_en">
+      <Link>res\prod_229_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_229_fr">
+      <Link>res\prod_229_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_230_en">
+      <Link>res\prod_230_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_230_es">
+      <Link>res\prod_230_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_230_fr">
+      <Link>res\prod_230_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_232_en">
+      <Link>res\prod_232_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_233_en">
+      <Link>res\prod_233_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_234_en">
+      <Link>res\prod_234_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_238_en">
+      <Link>res\prod_238_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_238_pt">
+      <Link>res\prod_238_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_239_en">
+      <Link>res\prod_239_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_239_pt">
+      <Link>res\prod_239_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_242_en">
+      <Link>res\prod_242_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_242_fr">
+      <Link>res\prod_242_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_243_en">
+      <Link>res\prod_243_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_243_fr">
+      <Link>res\prod_243_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_244_en">
+      <Link>res\prod_244_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_244_pt">
+      <Link>res\prod_244_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_245_en">
+      <Link>res\prod_245_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_245_pt">
+      <Link>res\prod_245_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_247_en">
+      <Link>res\prod_247_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_249_en">
+      <Link>res\prod_249_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_251_en">
+      <Link>res\prod_251_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_252_en">
+      <Link>res\prod_252_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_254_en">
+      <Link>res\prod_254_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_256_en">
+      <Link>res\prod_256_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_258_en">
+      <Link>res\prod_258_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_258_pt">
+      <Link>res\prod_258_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_260_en">
+      <Link>res\prod_260_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_261_en">
+      <Link>res\prod_261_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_263_en">
+      <Link>res\prod_263_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_264_en">
+      <Link>res\prod_264_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_266_en">
+      <Link>res\prod_266_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_267_en">
+      <Link>res\prod_267_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_268_en">
+      <Link>res\prod_268_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_269_en">
+      <Link>res\prod_269_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_269_fr">
+      <Link>res\prod_269_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_27_en">
+      <Link>res\prod_27_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_290_en">
+      <Link>res\prod_290_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_290_fr">
+      <Link>res\prod_290_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_299_en">
+      <Link>res\prod_299_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_30_el">
+      <Link>res\prod_30_el</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_30_en">
+      <Link>res\prod_30_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_31_en">
+      <Link>res\prod_31_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_31_nl">
+      <Link>res\prod_31_nl</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_33_en">
+      <Link>res\prod_33_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_33_fr">
+      <Link>res\prod_33_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_34_en">
+      <Link>res\prod_34_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_34_es">
+      <Link>res\prod_34_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_351_en">
+      <Link>res\prod_351_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_351_pt">
+      <Link>res\prod_351_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_352_de">
+      <Link>res\prod_352_de</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_352_en">
+      <Link>res\prod_352_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_352_fr">
+      <Link>res\prod_352_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_353_en">
+      <Link>res\prod_353_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_354_en">
+      <Link>res\prod_354_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_355_en">
+      <Link>res\prod_355_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_358_en">
+      <Link>res\prod_358_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_358_fi">
+      <Link>res\prod_358_fi</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_358_se">
+      <Link>res\prod_358_se</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_36_en">
+      <Link>res\prod_36_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_36_hu">
+      <Link>res\prod_36_hu</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_370_en">
+      <Link>res\prod_370_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_371_en">
+      <Link>res\prod_371_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_372_en">
+      <Link>res\prod_372_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_373_en">
+      <Link>res\prod_373_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_373_ro">
+      <Link>res\prod_373_ro</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_373_ru">
+      <Link>res\prod_373_ru</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_374_en">
+      <Link>res\prod_374_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_381_en">
+      <Link>res\prod_381_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_381_sr">
+      <Link>res\prod_381_sr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_39_en">
+      <Link>res\prod_39_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_39_it">
+      <Link>res\prod_39_it</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_40_en">
+      <Link>res\prod_40_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_40_ro">
+      <Link>res\prod_40_ro</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_41_de">
+      <Link>res\prod_41_de</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_41_en">
+      <Link>res\prod_41_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_41_fr">
+      <Link>res\prod_41_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_41_it">
+      <Link>res\prod_41_it</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_420_en">
+      <Link>res\prod_420_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_421_en">
+      <Link>res\prod_421_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_43_de">
+      <Link>res\prod_43_de</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_43_en">
+      <Link>res\prod_43_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_44_en">
+      <Link>res\prod_44_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_46_en">
+      <Link>res\prod_46_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_46_sv">
+      <Link>res\prod_46_sv</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_48_en">
+      <Link>res\prod_48_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_48_pl">
+      <Link>res\prod_48_pl</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_49_de">
+      <Link>res\prod_49_de</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_49_en">
+      <Link>res\prod_49_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_51_en">
+      <Link>res\prod_51_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_53_en">
+      <Link>res\prod_53_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_54_en">
+      <Link>res\prod_54_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_54_es">
+      <Link>res\prod_54_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_55_en">
+      <Link>res\prod_55_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_55_pt">
+      <Link>res\prod_55_pt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_56_en">
+      <Link>res\prod_56_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_56_es">
+      <Link>res\prod_56_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_57_en">
+      <Link>res\prod_57_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_57_es">
+      <Link>res\prod_57_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_58_en">
+      <Link>res\prod_58_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_58_es">
+      <Link>res\prod_58_es</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_62_en">
+      <Link>res\prod_62_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_62_id">
+      <Link>res\prod_62_id</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_66_en">
+      <Link>res\prod_66_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_66_th">
+      <Link>res\prod_66_th</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_7_en">
+      <Link>res\prod_7_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_7_ru">
+      <Link>res\prod_7_ru</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_81_en">
+      <Link>res\prod_81_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_81_ja">
+      <Link>res\prod_81_ja</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_82_en">
+      <Link>res\prod_82_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_82_fr">
+      <Link>res\prod_82_fr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_82_ko">
+      <Link>res\prod_82_ko</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_82_zh">
+      <Link>res\prod_82_zh</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_82_zh_Hant">
+      <Link>res\prod_82_zh_Hant</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_84_en">
+      <Link>res\prod_84_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_84_vi">
+      <Link>res\prod_84_vi</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_86_en">
+      <Link>res\prod_86_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_86_zh">
+      <Link>res\prod_86_zh</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_886_en">
+      <Link>res\prod_886_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_886_zh">
+      <Link>res\prod_886_zh</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_886_zh_Hant">
+      <Link>res\prod_886_zh_Hant</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_90_en">
+      <Link>res\prod_90_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_90_tr">
+      <Link>res\prod_90_tr</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_91_en">
+      <Link>res\prod_91_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_94_en">
+      <Link>res\prod_94_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_98_en">
+      <Link>res\prod_98_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\prod_98_fa">
+      <Link>res\prod_98_fa</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\test_1_de">
+      <Link>res\test_1_de</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\test_1_en">
+      <Link>res\test_1_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\test_82_en">
+      <Link>res\test_82_en</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\PhoneNumbers\res\test_82_ko">
+      <Link>res\test_82_ko</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

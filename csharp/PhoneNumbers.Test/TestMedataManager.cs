@@ -18,7 +18,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NUnit.Framework;
+#if NETFX_CORE
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework; 
+#else 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace PhoneNumbers.Test
 {
@@ -27,23 +31,23 @@ namespace PhoneNumbers.Test
     *
     * @author Lara Rennie
     */
-    [TestFixture]
+    [TestClass]
     public class TestMedataManager
     {
-        [Test]
+        [TestMethod]
         public void TestAlternateFormatsContainsData()
         {
             // We should have some data for Germany.
             var germanyAlternateFormats = MetadataManager.GetAlternateFormatsForCountry(49);
-            Assert.NotNull(germanyAlternateFormats);
-            Assert.True(germanyAlternateFormats.NumberFormatList.Count > 0);
+            Assert.IsNotNull(germanyAlternateFormats);
+            Assert.IsTrue(germanyAlternateFormats.NumberFormatList.Count > 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAlternateFormatsFailsGracefully()
         {
             var noAlternateFormats = MetadataManager.GetAlternateFormatsForCountry(999);
-            Assert.Null(noAlternateFormats);
+             Assert.IsNull(noAlternateFormats);
         }
     }
 }
